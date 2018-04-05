@@ -1,0 +1,15 @@
+Problema: Tenemos N dados especiales de seis lados cada uno con 6 diferentes enteros positivos en cada lado cada uno con un set que no necesariamente sera el mismo que en el dado anterior y queremos acomodarlos de tal forma que formen una corrida (digase de numeros enteros consecutivos) y queremos saber cual es la corrida mas larga que podemos formar con los N dados.
+Contexto: De entrada tendremos un archivo donde la primera linea tendra un numero entero positivo entre 1 y 100 que son los diferentes casos a manejar, despues empiezan los casos con la primer linea de cada caso siendo N (el numero de dados para el caso entre 1 y 50000 cuya suma entre todos los casos no debe superar 200000) y por ultimo N lineas que contienen los valores para cada dado con numeros entre 1 y 10^6.
+Las corridas no necesitan hacerse en orden y pueden tomarse los dados en el orden que se necesite para crear la corrida mas larga posible.
+Ejemplo: un caso de ejemplo seria si tuvieramos el siguiente input
+1
+4
+4 8 15 16 23 42
+8 6 7 5 30 9
+1 2 3 4 55 6
+2 10 18 36 54 86
+Lo que esto nos dice es que habra un solo caso con 4 dados.
+En este caso la corrida mas larga se forma tomando el dos de el cuarto dado, el 3 del tercer dado, el 4 del primer dado y el 5 del segundo dado.
+Solucion: Lo primero que se debe hacer aqui leer los datos separando la primer linea como el numero de casos la linea que sigue como N el numero de dados y saber diferenciar (tomando en cuenta N) cuando empiezan los numeros para las caras de cada dado. Si sabemos el rango de numero de los enteros estos se pueden ir guardando en un array de tamaño N_max y convertidos en numeros enteros de caracteres con la funcion atoi. despues generamos una matriz 2D donde X es cada dado y Y es cada cara de el dado resultando en una matriz de N*6. Cada fila representa un dado y las columnas son las diferentes caras. Esto se pasa despues a una matriz 2D de 2*(N*6) donde la primer fila tiene los valores de cada cara y el segundo el dado al que corresponde (de manera ordenada para que los indices correspondan a el valor y dado correspondiente) y este arreglo se ordena con quick sort (respetando que los indices sigan en la posicion correcta) y despues de esto se puede pasar a recorrer el nuevo arreglo ordenado para formar las corridas que se quieren con un contador que ignore cuando dos numeros iguales se encuentran de manera consecutiva o se encuentra que ya se uso el dado y reseteandose cuando se salta un numero.
+Este metodo es un poco por fuerza bruta y es ineficiente ya que el quick sort en el mejor caso toma Ω(n log(n))	y en su peor O(n^2) contando el O(n^2) que toma reordenar la matriz original en la que se utiliza para usar el quick sort y el O(6N) que toma generar la corrida.
+Un mucho mejor metodo es usando Maximum Bipartite Matching por medio de graphicos y el algoritmo ford fulkerson lo cual daria una eficiencia de O(n^3)
